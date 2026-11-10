@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "845771608812",
+    "project_id": "csc3220-final",
+    "storage_bucket": "csc3220-final.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:845771608812:android:5a38e146a98fbd3688cbc9",
+        "android_client_info": {
+          "package_name": "com.example.csc3220_final"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAG6fOgZV6cqC3tHH7yUt_qiQbhYQqI6SE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
