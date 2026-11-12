@@ -11,6 +11,7 @@
 // Dart imports
 
 // Flutter external package imports
+import 'package:csc322_starter_app/screens/general/screen_repeats.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -120,6 +121,8 @@ class _WidgetPrimaryScaffoldState extends ConsumerState<WidgetPrimaryScaffold> {
       return ScreenHome();
     else if (currentTabIndex == BottomNavSelection.ALTERNATE_SCREEN.index)
       return ScreenAlternate();
+    else if (currentTabIndex == BottomNavSelection.REPEATS_SCREEN.index)
+      return ScreenRepeats();
     else
       return ScreenHome();
   }
@@ -131,6 +134,8 @@ class _WidgetPrimaryScaffoldState extends ConsumerState<WidgetPrimaryScaffold> {
   Widget _getAppBarTitle(int currentTabIndex) {
     if (currentTabIndex == BottomNavSelection.HOME_SCREEN.index)
       return Text("Home");
+    else if (currentTabIndex == BottomNavSelection.REPEATS_SCREEN.index)
+      return Text('Repeats');
     else
       return Text("Alternate");
   }
@@ -173,6 +178,7 @@ class _WidgetPrimaryScaffoldState extends ConsumerState<WidgetPrimaryScaffold> {
         items: [
           BottomNavigationBarItem(label: "Home", activeIcon: Icon(Icons.home), icon: Icon(Icons.home)),
           BottomNavigationBarItem(label: "Alternate", activeIcon: Icon(Icons.business), icon: Icon(Icons.business)),
+          BottomNavigationBarItem(label: "Repeats", activeIcon: Icon(Icons.repeat), icon: Icon(Icons.repeat)),
         ],
       ),
     );

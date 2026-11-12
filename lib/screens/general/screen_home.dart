@@ -14,6 +14,8 @@
 import 'dart:async';
 
 // Flutter external package imports
+import 'package:csc322_starter_app/widgets/navigation/widget_app_drawer.dart';
+import 'package:csc322_starter_app/widgets/navigation/widget_primary_scaffold.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
@@ -36,6 +38,9 @@ class ScreenHome extends ConsumerStatefulWidget {
 class _ScreenHomeState extends ConsumerState<ScreenHome> {
   // The "instance variables" managed in this state
   bool _isInit = true;
+
+  final _formKey = GlobalKey<FormState>();
+  final _searchController = TextEditingController();
 
   ////////////////////////////////////////////////////////////////
   // Runs the following code once upon initialization
@@ -69,12 +74,84 @@ class _ScreenHomeState extends ConsumerState<ScreenHome> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         shape: ShapeBorder.lerp(CircleBorder(), StadiumBorder(), 0.5),
-        onPressed: () =>
-            Snackbar.show(SnackbarDisplayType.SB_INFO, 'You clicked the floating button on the home screen!', context),
+        onPressed: () => Snackbar.show(
+          SnackbarDisplayType.SB_INFO,
+          'You clicked the floating button on the home screen!',
+          context,
+        ),
         splashColor: Theme.of(context).primaryColor,
         child: Icon(Icons.add),
       ),
-      body: Center(child: Text('Home')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          verticalDirection: VerticalDirection.down,
+          mainAxisAlignment: .start,
+          crossAxisAlignment: .stretch,
+          spacing: 4,
+          children: [
+            Expanded(
+              flex: 2,
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: .start,
+                    children: [
+                      Text('Saturday Morning'),
+                      Text(
+                        '6 of 15 complete',
+                        style: Theme.of(context).textTheme.headlineMedium,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Card(
+                      child: ListTile(title: Text('Meals'), onTap: () {
+                        ref.read(providerPrimaryBottomNavTabIndex.notifier).selectTab(BottomNavSelection.ALTERNATE_SCREEN.index);
+                      }),
+                    ),
+                  ),
+                  Expanded(
+                    child: Card(
+                      child: ListTile(title: Text('Repeats'), onTap: () {
+                        ref.read(providerPrimaryBottomNavTabIndex.notifier).selectTab(BottomNavSelection.REPEATS_SCREEN.index);
+                      }),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Form(
+                key: _formKey,
+                child: TextFormField(
+                  controller: _searchController,
+                  textInputAction: .search,
+                  decoration: InputDecoration(
+                    hintText: 'Search this list...',
+                    prefixIcon: Icon(Icons.search),
+                    suffixIcon: Icon(Icons.add),
+                  ),
+                  onChanged: (val) {
+                    print(val);
+                  },
+                  validator: (val) {},
+                ),
+              ),
+            ),
+            Expanded(flex: 4, child: Text('Item Lists')),
+          ],
+        ),
+      ),
     );
   }
 }
