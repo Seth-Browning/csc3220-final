@@ -186,9 +186,11 @@ class _ScreenHomeState extends ConsumerState<ScreenHome> {
                       //print('Data: ${items[index].data()}');
                       final item = items[index].data() as Map<String, dynamic>;
                   
-                      return ListTile(
-                        title: Text(item['name']),
-                        subtitle: Text('${item['quantity']} ${item['unit']}'),
+                      return Card(
+                        child: ListTile(
+                          title: Text(item['name']),
+                          subtitle: Text('${item['quantity']} ${item['unit']}'),
+                        ),
                       );
                     },
                   );

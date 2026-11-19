@@ -77,7 +77,56 @@ class _ScreenAlternateState extends ConsumerState<ScreenAlternate> {
         splashColor: Theme.of(context).primaryColor,
         child: Icon(Icons.add),
       ),
-      body: Center(child: Text('Alternate')),
+      body: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          verticalDirection: VerticalDirection.down,
+          mainAxisAlignment: .start,
+          crossAxisAlignment: .stretch,
+          spacing: 4,
+          children: [
+            Text(
+              'Choose what sounds good. We\'ll combine duplicates and sort the ingredients into your list.',
+            ),
+            const SizedBox(height: 16),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: .spaceBetween,
+                spacing: 4,
+                children: [
+                  Card(child: Text('M')),
+                  Card(child: Text('Tu')),
+                  Card(child: Text('W')),
+                  Card(child: Text('Th')),
+                  Card(child: Text('F')),
+                  Card(child: Text('Sa')),
+                  Card(child: Text('Su')),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: .spaceBetween,
+                children: [
+                  Text('This week\'s dinners.'),
+                  TextButton(onPressed: () {}, child: Text('Browse All')),
+                ],
+              ),
+            ),
+            Expanded(flex: 4, child: Text('Meal list')),
+            ElevatedButton(
+              child: Text('Add # ingredients'),
+              onPressed: () {
+                Snackbar.show(
+                  SnackbarDisplayType.SB_INFO,
+                  'You have clicked to add meal ingredients',
+                  context,
+                );
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
