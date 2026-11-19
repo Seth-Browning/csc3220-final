@@ -17,6 +17,7 @@ import 'dart:math';
 // Flutter external package imports
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csc322_starter_app/db_helpers/items.dart';
+import 'package:csc322_starter_app/screens/general/add_grocery_item_bottom.dart';
 import 'package:csc322_starter_app/widgets/navigation/widget_app_drawer.dart';
 import 'package:csc322_starter_app/widgets/navigation/widget_primary_scaffold.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -77,11 +78,11 @@ class _ScreenHomeState extends ConsumerState<ScreenHome> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         shape: ShapeBorder.lerp(CircleBorder(), StadiumBorder(), 0.5),
-        onPressed: () => Snackbar.show(
-          SnackbarDisplayType.SB_INFO,
-          'You clicked the floating button on the home screen!',
-          context,
-        ),
+        onPressed: () {
+          showModalBottomSheet(context: context, builder: (sheetContext) {
+            return AddGroceryItemBottom(sheetContext: sheetContext);
+          });
+        },
         splashColor: Theme.of(context).primaryColor,
         child: Icon(Icons.add),
       ),
