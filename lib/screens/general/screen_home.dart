@@ -166,16 +166,6 @@ class _ScreenHomeState extends ConsumerState<ScreenHome> {
               ),
             ),
             Expanded(
-              flex: 1,
-              child: ElevatedButton(
-                onPressed: () {
-                  final random = Random();
-                  addGroceryItem('Item-${random.nextInt(pow(2, 30).toInt())}', random.nextInt(26), '#');
-                },
-                child: Text('Add Random item'),
-              ),
-            ),
-            Expanded(
               flex: 4,
               child: StreamBuilder<QuerySnapshot>(
                 stream: groceryStream,
