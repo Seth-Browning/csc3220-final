@@ -12,8 +12,11 @@
 
 // Flutter imports
 import 'dart:async';
+import 'dart:math';
 
 // Flutter external package imports
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csc322_starter_app/db_helpers/items.dart';
 import 'package:csc322_starter_app/widgets/navigation/widget_app_drawer.dart';
 import 'package:csc322_starter_app/widgets/navigation/widget_primary_scaffold.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -90,8 +93,7 @@ class _ScreenHomeState extends ConsumerState<ScreenHome> {
           crossAxisAlignment: .stretch,
           spacing: 4,
           children: [
-            Expanded(
-              flex: 2,
+            IntrinsicHeight(
               child: Card(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -114,16 +116,30 @@ class _ScreenHomeState extends ConsumerState<ScreenHome> {
                 children: [
                   Expanded(
                     child: Card(
-                      child: ListTile(title: Text('Meals'), onTap: () {
-                        ref.read(providerPrimaryBottomNavTabIndex.notifier).selectTab(BottomNavSelection.ALTERNATE_SCREEN.index);
-                      }),
+                      child: ListTile(
+                        title: Text('Meals'),
+                        onTap: () {
+                          ref
+                              .read(providerPrimaryBottomNavTabIndex.notifier)
+                              .selectTab(
+                                BottomNavSelection.ALTERNATE_SCREEN.index,
+                              );
+                        },
+                      ),
                     ),
                   ),
                   Expanded(
                     child: Card(
-                      child: ListTile(title: Text('Repeats'), onTap: () {
-                        ref.read(providerPrimaryBottomNavTabIndex.notifier).selectTab(BottomNavSelection.REPEATS_SCREEN.index);
-                      }),
+                      child: ListTile(
+                        title: Text('Repeats'),
+                        onTap: () {
+                          ref
+                              .read(providerPrimaryBottomNavTabIndex.notifier)
+                              .selectTab(
+                                BottomNavSelection.REPEATS_SCREEN.index,
+                              );
+                        },
+                      ),
                     ),
                   ),
                 ],
@@ -148,7 +164,46 @@ class _ScreenHomeState extends ConsumerState<ScreenHome> {
                 ),
               ),
             ),
-            Expanded(flex: 4, child: Text('Item Lists')),
+            Expanded(
+              flex: 1,
+              child: ElevatedButton(
+                onPressed: () {
+                  final random = Random();
+                  addGroceryItem('Item-${random.nextInt(pow(2, 30).toInt())}', random.nextInt(26), '#');
+                },
+                child: Text('Add Random item'),
+              ),
+            ),
+            Expanded(
+              flex: 4,
+              child: StreamBuilder<QuerySnapshot>(
+                stream: groceryStream,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return const Text('Something went wrong');
+                  }
+              
+                  if (!snapshot.hasData) {
+                    return const CircularProgressIndicator();
+                  }
+                  
+                  final items = snapshot.data!.docs;
+              
+                  return ListView.builder(
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      //print('Data: ${items[index].data()}');
+                      final item = items[index].data() as Map<String, dynamic>;
+                  
+                      return ListTile(
+                        title: Text(item['name']),
+                        subtitle: Text('${item['quantity']} ${item['unit']}'),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
